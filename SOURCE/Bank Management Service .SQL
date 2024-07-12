@@ -1,0 +1,81 @@
+CREATE DATABASE SchoolDB;
+USE SchoolDB;
+
+
+CREATE TABLE BANK(
+Bank_Name VARCHAR(100) NOT NULL,
+Bank_Code INT PRIMARY KEY,
+Address VARCHAR(100)  NOT NULL
+);
+ 
+ 
+INSERT INTO BANK (Bank_Name,Bank_Code,Address) VALUES
+('HDFC',4587569,'PLOT-48/9876 BHUBANESWAR'),
+('ICICI',63598565,' 78/7909 BHUBANESWAR'),
+('AXIS',527162,'5/789 ANUGUL');
+ 
+ 
+CREATE TABLE BRANCH(
+Branch_ID  INT IDENTITY(1,1) Primary Key,
+Branch_Name VARCHAR(50) Unique,
+Address VARCHAR(100) Not Null,
+Bank_Code INT,
+FOREIGN KEY (Bank_code)
+REFERENCES BANK(Bank_code) ON  DELETE CASCADE
+);
+ 
+INSERT INTO BRANCH (Branch_Name,Address,Bank_code) VALUES
+('Tankapani','plot56/867',4587569),
+('Badagada','plot56/867',63598565),
+('Samantarapur','plot56/867',527162);
+ 
+ 
+CREATE TABLE CUSTOMER(
+Customer_ID INT IDENTITY(1,1) Primary Key,
+Name VARCHAR(50) Not Null,
+Phone_Number NVARCHAR(12) Not Null,
+Address VARCHAR(100) Not Null
+)
+ 
+INSERT INTO CUSTOMER (NAME,Phone_Number,Address) VALUES
+('Swatishree',7008249464,'plot 67/97'),
+('Niraj',8249591628,'plot 67/098'),
+('Omm',7749962764,'plot 98/987');
+ 
+CREATE TABLE ACCOUNT(
+Account_Number NVARCHAR(20) Primary Key,
+Account_Type VARCHAR(20) Not Null,
+Balance INT  Not Null,
+Branch_ID INT,
+FOREIGN KEY (Branch_ID)
+REFERENCES BRANCH(Branch_ID) ON DELETE CASCADE
+)
+ 
+INSERT INTO ACCOUNT (Account_Number,Account_Type,Balance) VALUES
+('2655455656','SAVINGS',25466),
+('2659525656','SALARIED',25466),
+('2699995656','SALARIED',25466);
+ 
+ 
+CREATE TABLE LOAN(
+Loan_ID INT identity(1,1) Primary Key,
+Loan_TYPE NCHAR(2) CHECK (LOAN_TYPE='PL' OR LOAN_TYPE='HL'),
+Amount NVARCHAR(20) Not Null,
+Branch_ID  INT,
+FOREIGN KEY (BRANCH_ID)
+REFERENCES BRANCH(BRANCH_ID)
+)
+ 
+INSERT INTO LOAN (Loan_TYPE,Amount) VALUES
+('HL','852963'),
+('PL','2575826'),
+('PL','8548256');
+ 
+ 
+ 
+SELECT * FROM BANK;
+SELECT * FROM BRANCH;
+SELECT * FROM CUSTOMER;
+SELECT * FROM ACCOUNT;
+SELECT * FROM LOAN;
+
